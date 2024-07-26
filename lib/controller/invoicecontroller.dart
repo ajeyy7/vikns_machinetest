@@ -9,17 +9,18 @@ class InvoiceController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchData();
+    fetchInvoices();
   }
 
-  Future<void> fetchData() async {
+ void fetchInvoices() async {
     try {
-      List<dynamic> data = await _services.fetchData();
+      isLoading(true);
+      List<dynamic> data = await Services().fetchData();
       salesData.value = data;
     } catch (e) {
-      print(e);
+      Get.snackbar("Error", "Failed to fetch invoices");
     } finally {
-      isLoading.value = false;
+      isLoading(false);
     }
   }
 }
