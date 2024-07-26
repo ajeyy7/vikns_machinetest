@@ -7,10 +7,12 @@ import 'package:vikns_machinetest/services/services.dart';
 import 'package:vikns_machinetest/view/pages/bottomnav.dart';
 import 'package:vikns_machinetest/view/pages/loginpage.dart';
 
-
+import 'controller/invoicecontroller.dart';
 
 void main() {
   Get.put(Services());
+    Get.put(InvoiceController());
+
   runApp(const MyApp());
 }
 
