@@ -13,10 +13,20 @@ class Services extends GetxService {
 
   final String invoiceUrl =
       'https://www.api.viknbooks.com/api/v10/sales/sale-list-page/';
-  Future<void> signin(
-      {required String username,
-      required String password, required LoginController loginController,
-      }) async {
+  Future<String> _getAccessToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? accessToken = prefs.getString('accessToken');
+    if (accessToken == null || accessToken.isEmpty) {
+      throw Exception('Access token is not available');
+    }
+    return accessToken;
+  }
+
+  Future<void> signin({
+    required String username,
+    required String password,
+    required LoginController loginController,
+  }) async {
     try {
       final response = await http.post(Uri.parse(loginUrl), body: {
         "username": username,
@@ -44,14 +54,11 @@ class Services extends GetxService {
       }
     } catch (e) {
       print(e);
-    }finally{
-
-    }
+    } finally {}
   }
 
   Future<List<dynamic>> fetchData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String accessToken = prefs.getString('accessToken') ?? '';
+    String accessToken = await _getAccessToken();
     final Map<String, dynamic> requestData = {
       "BranchID": 1,
       "CompanyID": "1901b825-fe6f-418d-b5f0-7223d0040d08",
