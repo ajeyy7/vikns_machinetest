@@ -26,7 +26,7 @@ class InvoicePage extends StatelessWidget {
         if (invoiceController.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         } else if (invoiceController.salesData.isEmpty) {
-          return const Center(child: Text("No data available", style: TextStyle(color: Colors.white)));
+          return const Center(child: CircularProgressIndicator());
         } else {
           return Column(
             children: [
